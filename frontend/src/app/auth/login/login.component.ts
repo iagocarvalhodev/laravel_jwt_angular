@@ -1,6 +1,8 @@
 import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +13,13 @@ export class LoginComponent implements OnInit {
 
   f: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService) { }
+  errorCredentials = false;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+    ) { }
 
   ngOnInit() {
 
@@ -25,8 +33,15 @@ export class LoginComponent implements OnInit {
 
   onSubmit(){
     this.authService.login(this.f.value).subscribe(
-      (data) => {
-        console.log(data);
+      (resp) => {
+        this.router.navigate(['admin']);
+      },
+      (errorResponse: HttpErrorResponse) => {
+        console.log(errorResponse);
+        if(errorResponse.status === 401)
+        {
+          this.errorCredentials = true;
+        }
       }
     );
   }

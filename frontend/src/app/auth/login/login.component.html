@@ -4,11 +4,18 @@
       <div class="panel panel-default">
         <div class="panel-body">
           <h1 class="text-center">
-            <b>TJG</b> Web
+            <b>JWT</b> Web
             <br />
             <small>Área Restrita</small>
           </h1>
           <br />
+
+          <!-- alertas -->
+          <div class="alert alert-danger alert-dismissible" role="alert" *ngIf="errorCredentials">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            Usuario ou senha invalidos !
+          </div>
+
           <form [formGroup]="f" novalidate>
             <div class="form-group has-feedback" [ngClass]="{'has-success': f.controls['email'].valid,
                 'has-error': f.controls['email'].invalid && (f.controls['email'].touched || f.controls['email'].dirty)}">
