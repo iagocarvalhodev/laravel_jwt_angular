@@ -4,13 +4,14 @@ import { AdminComponent } from './../admin.component';
 import { NgModule, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { AuthGuard } from '../../guards/auth.guard';
 
 @NgModule({
   imports: [
     RouterModule.forChild([
       {
         path: 'admin',
-        component: AdminComponent,
+        component: AdminComponent, canActivate: [AuthGuard], canActivateChild: [AuthGuard],
         children: [
           {
             path: '',
